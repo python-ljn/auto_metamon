@@ -17,7 +17,7 @@ class Session:
 
 class MetamonSession(Session):
 
-    def __init__(self, token):
+    def __init__(self, address, token):
         super(MetamonSession, self).__init__()
         self.token = token
         self.base_headers = {
@@ -27,11 +27,15 @@ class MetamonSession(Session):
                           '(KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36',
             "accesstoken": self.token
         }
+        self.base_data = dict(address=address)
 
     def post(self, url, headers: Dict[str, Any] = None, data: Dict[str, Any] = None, **kwargs):
         if not headers:
             headers = self.base_headers
-        ret = super().post(url, headers, data).json()
+        if not data:
+            data = dict()
+        self.base_data.update(data)
+        ret = super().post(url, headers, self.base_data).json()
         if ret["code"] != "SUCCESS":
             raise ValueError(f"请求失败{ret}")
         return ret

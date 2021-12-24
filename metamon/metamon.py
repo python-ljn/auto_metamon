@@ -10,16 +10,15 @@ from .config import BP_TYPE_MAPPING, BATTLE_RACA
 class Metamon:
 
     def __init__(self, address, token):
-        self.address = address
+        # self.address = address
         # self.token = token
         self.url = Url()
-        self.session = MetamonSession(token)
+        self.session = MetamonSession(address, token)
         self.backpack = Backpack()
         self.metamon_list = list()
 
     def list_wallet_property(self):
         request_data = {
-            "address": self.address,
             "page": "1",
             "pageSize": 99999,
         }
@@ -34,8 +33,7 @@ class Metamon:
 
     def set_backpack(self):
         """设置背包道具数量"""
-        response_data = self.session.post(self.url.check_bag,
-                                          data={"address": self.address})
+        response_data = self.session.post(self.url.check_bag)
         for item in response_data["data"]["item"]:
             if item["bpType"] in BP_TYPE_MAPPING:
                 setattr(self.backpack, BP_TYPE_MAPPING[item["bpType"]], int(item["bpNum"]))
@@ -58,7 +56,7 @@ class Metamon:
     def update_monster(self, nft_id: int) -> bool:
         """升级元兽"""
         self.set_backpack()
-        request_data = dict(nftId=nft_id, address=self.address)
+        request_data = dict(nftId=nft_id)
         if not self.backpack.potion:
             print("potion is not enough")
             return False
@@ -100,8 +98,7 @@ class Metamon:
             exp = metamon_info["exp"]
             exp_max = metamon_info["expMax"]
             tear = metamon_info["tear"]
-            battle_data = dict(battleLevel=1, monsterA=_id, monsterB=fight_metamon_id,
-                               address=self.address)
+            battle_data = dict(battleLevel=1, monsterA=_id, monsterB=fight_metamon_id)
             win = lose = battle = 0
 
             # update_result = 1
