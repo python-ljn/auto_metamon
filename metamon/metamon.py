@@ -15,7 +15,6 @@ class Metamon:
         self.url = Url()
         self.session = MetamonSession(token)
         self.backpack = Backpack()
-        self.base_request_data = dict(address=self.address)
         self.metamon_list = list()
 
     def list_wallet_property(self):
@@ -59,7 +58,7 @@ class Metamon:
     def update_monster(self, nft_id: int) -> bool:
         """升级元兽"""
         self.set_backpack()
-        request_data = dict(nftId=nft_id)
+        request_data = dict(nftId=nft_id, address=self.address)
         if not self.backpack.potion:
             print("potion is not enough")
             return False
@@ -101,7 +100,8 @@ class Metamon:
             exp = metamon_info["exp"]
             exp_max = metamon_info["expMax"]
             tear = metamon_info["tear"]
-            battle_data = dict(battleLevel=1, monsterA=_id, monsterB=fight_metamon_id)
+            battle_data = dict(battleLevel=1, monsterA=_id, monsterB=fight_metamon_id,
+                               address=self.address)
             win = lose = battle = 0
 
             # update_result = 1
