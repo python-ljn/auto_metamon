@@ -73,8 +73,8 @@ class Metamon:
     def compose_monster_egg(self):
         """合成元兽蛋"""
         self.check_log()
-        number = self.backpack.mintable_egg
-        if not number:
+        number = self.backpack.fragment // 1000
+        if number:
             self.session.post(self.url.compose_monster_egg)
         print(f"Composed {number} eggs")
 
