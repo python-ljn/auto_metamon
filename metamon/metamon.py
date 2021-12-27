@@ -70,15 +70,11 @@ class Metamon:
         print(f"metamon({nft_id}) level up!")
         return True
 
-    def compose_monster_egg(self, number=0):
+    def compose_monster_egg(self):
         """合成元兽蛋"""
         self.check_log()
-        compose_number = self.backpack.mintable_egg
-        if number > compose_number:
-            number = compose_number
-        if number == 0:
-            number = compose_number
-        for i in range(number):
+        number = self.backpack.mintable_egg
+        if not number:
             self.session.post(self.url.compose_monster_egg)
         print(f"Composed {number} eggs")
 
@@ -93,11 +89,11 @@ class Metamon:
         for metamon_info in self.metamon_list:
             if not self.is_can_battle():
                 break
-
             _id = metamon_info["id"]
             exp = metamon_info["exp"]
             exp_max = metamon_info["expMax"]
             tear = metamon_info["tear"]
+            score = metamon_info["sca"]
             battle_data = dict(battleLevel=1, monsterA=_id, monsterB=fight_metamon_id)
             win = lose = battle = 0
 
@@ -126,4 +122,4 @@ class Metamon:
                 #     exp = 0
                 # if update_result == 0:
                 #     break
-            print(f"metamon {_id} battled: {battle}, Win: {win} Lose:{lose};")
+            print(f"metamon({score}) {_id} battled: {battle}, Win: {win} Lose:{lose};")
