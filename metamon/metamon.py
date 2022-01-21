@@ -94,6 +94,7 @@ class Metamon:
             exp_max = metamon_info["expMax"]
             tear = metamon_info["tear"]
             score = metamon_info["sca"]
+            rarity = metamon_info["rarity"]
             battle_data = dict(battleLevel=1, monsterA=_id, monsterB=fight_metamon_id)
             win = lose = battle = 0
 
@@ -102,6 +103,11 @@ class Metamon:
             while 1:
                 if not self.is_can_battle():
                     break
+                # 升级
+                if exp > exp_max and rarity != "R":
+                    self.update_monster(_id)
+                    exp = 0
+
                 if tear == 0:
                     break
 
