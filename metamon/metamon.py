@@ -95,6 +95,7 @@ class Metamon:
             tear = metamon_info["tear"]
             score = metamon_info["sca"]
             rarity = metamon_info["rarity"]
+            level = metamon_info["level"]
             battle_data = dict(battleLevel=1, monsterA=_id, monsterB=fight_metamon_id)
             win = lose = battle = 0
 
@@ -128,4 +129,4 @@ class Metamon:
                 #     exp = 0
                 # if update_result == 0:
                 #     break
-            print(f"metamon({score}) {_id} battled: {battle}, Win: {win} Lose:{lose};")
+            print(f"metamon({score}) level({level}) {_id} battled: {battle}, Win: {win} Lose:{lose};")
