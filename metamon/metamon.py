@@ -9,11 +9,11 @@ from .config import BP_TYPE_MAPPING, BATTLE_RACA
 
 class Metamon:
 
-    def __init__(self, address, token, is_open=False):
+    def __init__(self, address, token, open_number=0):
         # self.address = address
         # self.token = token
         self.url = Url()
-        self.open = is_open
+        self.open_number = open_number
         self.session = MetamonSession(address, token)
         self.backpack = Backpack()
         self.metamon_list = list()
@@ -85,7 +85,7 @@ class Metamon:
         self.start_battle(fight_id)
         self.compose_monster_egg()
         self.check_log()
-        if self.open:
+        for i in range(self.open_number):
             self.open_egg()
 
     def open_egg(self):
