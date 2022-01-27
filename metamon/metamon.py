@@ -86,6 +86,8 @@ class Metamon:
         self.compose_monster_egg()
         self.check_log()
         for i in range(self.open_number):
+            if i > self.backpack.egg:
+                break
             self.open_egg()
 
     def open_egg(self):
