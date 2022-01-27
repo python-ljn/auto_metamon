@@ -1,3 +1,4 @@
+import time
 from typing import Dict, List, Any
 
 
@@ -86,6 +87,7 @@ class Metamon:
         self.compose_monster_egg()
         self.check_log()
         for i in range(self.open_number):
+            time.sleep(1)
             if i > self.backpack.egg:
                 break
             self.open_egg()
