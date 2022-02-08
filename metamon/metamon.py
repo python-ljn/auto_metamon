@@ -55,7 +55,7 @@ class Metamon:
             return False
         return True
 
-    def update_monster(self, nft_id: int) -> bool:
+    def update_monster(self, nft_id: int, rarity: str) -> bool:
         """升级元兽"""
         self.set_backpack()
         request_data = dict(nftId=nft_id)
@@ -68,7 +68,15 @@ class Metamon:
         if response_data["result"] != 1:
             return False
 
-        self.backpack.potion -= 1
+        # 不同的类型需要消耗不同的材料
+        update_mapping = {
+            "R": "ydiamond",
+            "N": "potion",
+        }
+
+        v = getattr(self.backpack, update_mapping[rarity])
+        v -= 1
+        # self.backpack.potion -= 1
         print(f"metamon({nft_id}) level up!")
         return True
 
@@ -120,8 +128,9 @@ class Metamon:
                 if not self.is_can_battle():
                     break
                 # 升级
-                if exp > exp_max and rarity != "R":
-                    self.update_monster(_id)
+                # if exp > exp_max and rarity != "R":
+                if exp > exp_max:
+                    self.update_monster(_id, rarity)
                     exp = 0
 
                 if tear == 0:
