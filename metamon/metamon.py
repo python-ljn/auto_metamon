@@ -66,6 +66,7 @@ class Metamon:
         response_data = self.session.post(self.url.update_monster,
                                           data=request_data)
         if response_data["result"] != 1:
+            print(f"metamon{nft_id} upgrade fail, {response_data['result']}")
             return False
 
         # 不同的类型需要消耗不同的材料
@@ -124,8 +125,8 @@ class Metamon:
                     break
                 # 升级
                 # if exp > exp_max and rarity != "R":
-                if exp > exp_max:
-                    self.update_monster(_id, rarity)
+                if exp > exp_max and self.update_monster(_id, rarity):
+                    level += 1
                     exp = 0
 
                 if tear == 0:
