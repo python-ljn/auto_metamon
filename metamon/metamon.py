@@ -102,11 +102,8 @@ class Metamon:
 
     def open_egg(self):
         res = self.session.post(self.url.open_monster_egg)
-        if res["code"].upper() == "SUCCESS":
-            data = res['data']
-            print(f"Open result {data['category']}, tokenId: {data['tokenId']}")
-        else:
-            print("Open egg fail")
+        data = res['data']
+        print(f"Open result {data['category']}, tokenId: {data['tokenId']}")
 
     def start_battle(self, fight_metamon_id):
         for metamon_info in self.metamon_list:
@@ -121,8 +118,6 @@ class Metamon:
             level = metamon_info["level"]
             battle_data = dict(battleLevel=1, monsterA=_id, monsterB=fight_metamon_id)
             win = lose = battle = 0
-
-            # update_result = 1
 
             while 1:
                 if not self.is_can_battle():
@@ -147,10 +142,5 @@ class Metamon:
                 tear -= 1
                 self.backpack.raca -= BATTLE_RACA
                 self.backpack.fragment += response_data["data"]["bpFragmentNum"]
-                # if exp < exp_max:
-                # else:
-                #     update_result = self.update_monster(_id)
-                #     exp = 0
-                # if update_result == 0:
-                #     break
-            print(f"metamon({score}) level({level}) {_id} battled: {battle}, Win: {win} Lose:{lose};")
+            print(f"（{rarity}）metamon({score}) level({level}) {_id} battled: {battle}, "
+                  f"Win: {win} Lose:{lose};")
