@@ -123,6 +123,9 @@ class Metamon:
             while 1:
                 if not self.is_can_battle():
                     break
+                # 只对N和R进行打怪和升级
+                if rarity not in ("R", "N"):
+                    continue
                 # 升级
                 # if exp > exp_max and rarity != "R":
                 if exp > exp_max and self.update_monster(_id, rarity):
