@@ -126,9 +126,9 @@ class Metamon:
                 # 只对N和R进行打怪和升级
                 if rarity not in ("R", "N"):
                     break
-                # 升级
+                # 元兽级别大于20级才升级
                 # if exp > exp_max and rarity != "R":
-                if exp > exp_max and self.update_monster(_id, rarity):
+                if exp > exp_max and level >= 20 and self.update_monster(_id, rarity):
                     level += 1
                     exp = 0
 
